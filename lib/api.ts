@@ -7,6 +7,7 @@ export interface FetchNotesParams {
     page : number,
     perPage: number,
     sortBy?: "created" | "updated"
+    categoryId?: string
 }
 interface CreateNoteParams {
     title: string,

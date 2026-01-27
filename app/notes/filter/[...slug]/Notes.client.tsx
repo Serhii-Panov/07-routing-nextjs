@@ -2,7 +2,6 @@
 import NoteList from "@/components/NoteList/NoteList";
 import { useQuery, keepPreviousData } from "@tanstack/react-query";
 import { fetchNotes } from "@/lib/api";
-
 import css from "./Notes.client.module.css";
 import { useState } from "react";
 import { Toaster } from "react-hot-toast";
@@ -13,14 +12,26 @@ import Modal from "@/components/Modal/Modal";
 import NoteForm from "@/components/NoteForm/NoteForm";
 import SearchBox from "@/components/SearchBox/SearchBox";
 
-const NotesClient = () => {
+type Props = {
+  params: string | undefined;
+};
+
+const NotesClient = ({params}:Props) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
   const [currentQuery, setCurrentQuery] = useState<FetchNotesParams>({
     search: searchQuery,
+    tag: params as
+      | "Work"
+      | "Personal"
+      | "Meeting"
+      | "Shopping"
+      | "Todo"
+      | undefined,
     page: currentPage,
     perPage: 10,
   });
+  
   const updateSearchQuery = useDebouncedCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       setSearchQuery(e.target.value);
@@ -64,7 +75,7 @@ const NotesClient = () => {
         <p>No notes found. Try creating one!</p>
       )}
       {modalOpen && (
-        <Modal onClose={closeModal}>
+        <Modal>
           <NoteForm onClose={closeModal} />
         </Modal>
       )}
