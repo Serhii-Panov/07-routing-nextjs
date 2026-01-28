@@ -75,7 +75,7 @@ const NotesClient = ({params}:Props) => {
         <p>No notes found. Try creating one!</p>
       )}
       {modalOpen && (
-        <Modal>
+        <Modal onClose={closeModal}>
           <NoteForm onClose={closeModal} />
         </Modal>
       )}

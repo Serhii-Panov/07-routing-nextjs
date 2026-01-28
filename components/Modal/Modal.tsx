@@ -2,17 +2,14 @@
 import { createPortal } from "react-dom";
 import { useEffect } from "react";
 import css from "./Modal.module.css";
-import { useRouter } from "next/navigation";
 
 interface ModalProps {
   children: React.ReactNode;
+  onClose: () => void;
 }
 
 export default function Modal(props: ModalProps) {
-  const router = useRouter();
-  const close = () => {
-    router.back();
-  };
+  const close = props.onClose;
   const handleBackdropClick = (event: React.MouseEvent<HTMLDivElement>) => {
     if (event.target === event.currentTarget) {
       close();
